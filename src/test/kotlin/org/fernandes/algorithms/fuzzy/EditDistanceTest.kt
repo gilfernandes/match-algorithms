@@ -3,8 +3,6 @@ package org.fernandes.algorithms.fuzzy
 import org.fernandes.algorithms.EditDistance
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 

@@ -11,11 +11,10 @@ class DamerauLevenshtein {
     }
 
     /**
-     * optimal string alignment distance or restricted edit distance
+     * Optimal string alignment distance or restricted edit distance. The distance of the transposition is
+     * always one.
      */
     fun osaDistance(s1: CharSequence, s2: CharSequence): Pair<Int, Array<IntArray>> {
-        requireNotNull(s1) { "First string should not be null. Make sure you specify the first string." }
-        requireNotNull(s2) { "Second string should not be null. Make sure you specify the second string." }
         val m = s1.length
         val n = s2.length
         val matrix = Array(m + 1, { IntArray(n + 1) })
@@ -45,14 +44,17 @@ class DamerauLevenshtein {
         return damerauLevenshtein(a, b).first
     }
 
+    /**
+     * According to Wikipedia:
+     * <cite>Damerau–Levenshtein distance between two words is the minimum number of operations (consisting of insertions,
+     * deletions or substitutions of a single character, or transposition of two adjacent characters) required to change one word into the other</cite>
+     */
     fun damerauLevenshtein(a: CharSequence, b: CharSequence): Pair<Int, Array<IntArray>> {
-        requireNotNull(a) { "First string should not be null. Make sure you specify the first string." }
-        requireNotNull(b) { "Second string should not be null. Make sure you specify the second string." }
         val aLength = a.length
         val bLength = b.length
-        val d = Array(aLength + 1, { IntArray(bLength + 1) })
+        val d = Array(aLength + 1) { IntArray(bLength + 1) }
         val daMap = hashMapOf<Char, Int>()
-        val maxdist = a.length + b.length
+        val maxDistance = a.length + b.length
         for (i in 0..aLength) {
             d[i][0] = i
         }
@@ -73,7 +75,7 @@ class DamerauLevenshtein {
                 val substitution = d[i - 1][j - 1] + cost
                 val insertion = d[i][j - 1] + 1
                 val deletion = d[i - 1][j] + 1
-                val transposition = if (k == 0 || l == 0) maxdist else d[k - 1][l - 1] + (i - k - 1) + 1 + (j - l - 1)
+                val transposition = if (k == 0 || l == 0) maxDistance else d[k - 1][l - 1] + (i - k - 1) + 1 + (j - l - 1)
                 d[i][j] = intArrayOf(substitution, insertion, deletion, transposition).min() as Int
             }
             daMap[a[i - 1]] = i
