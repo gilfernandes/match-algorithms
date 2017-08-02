@@ -19,8 +19,12 @@ class DamerauLevenshtein {
         val m = s1.length
         val n = s2.length
         val matrix = Array(m + 1, { IntArray(n + 1) })
-        for (i in 0..m) matrix[i][0] = i
-        for (i in 0..n) matrix[0][i] = i
+        for (i in 0..m) {
+            matrix[i][0] = i
+        }
+        for (i in 0..n) {
+            matrix[0][i] = i
+        }
 
         for (i in 1..m) {
             for (j in 1..n) {
